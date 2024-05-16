@@ -1,12 +1,18 @@
-import React, { useState } from 'react';
+import React, { FormEvent, useState } from 'react';
 import Modal from "@mui/material/Modal";
 import Button from '@mui/material/Button';
 
-function CategoryModal({setFeedbackMessage, setFeedbackColor, onAddCategory}) {
+interface Props {
+    setFeedbackMessage: React.Dispatch<React.SetStateAction<string>>;
+    setFeedbackColor: React.Dispatch<React.SetStateAction<string>>;
+    onAddCategory: () => void;
+}
+
+function CategoryModal({setFeedbackMessage, setFeedbackColor, onAddCategory}: Props) {
     const [category, setCategoryName] = useState('');
     const [open, setOpen] = useState(false);
 
-    const handleSubmit= async (event) => {
+    const handleSubmit= async (event:FormEvent<HTMLFormElement>) => {
         event.preventDefault()
         console.log(category);
         const token = localStorage.getItem('token'); // Retrieve the stored token

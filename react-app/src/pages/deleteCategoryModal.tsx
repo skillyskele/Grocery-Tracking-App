@@ -1,8 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, MouseEvent } from 'react';
 import Modal from "@mui/material/Modal";
 import Button from '@mui/material/Button';
 
-function DeleteCategoryModal({ category, setFeedbackMessage, setFeedbackColor, onDeleteCategory }) {
+interface Props {
+    category: string;
+    setFeedbackMessage: React.Dispatch<React.SetStateAction<string>>;
+    setFeedbackColor: React.Dispatch<React.SetStateAction<string>>;
+    onDeleteCategory: () => void;
+}
+
+function DeleteCategoryModal({ category, setFeedbackMessage, setFeedbackColor, onDeleteCategory }: Props) {
     const [open, setOpen] = useState(false);
 
     const handleClose = () => {
@@ -13,7 +20,7 @@ function DeleteCategoryModal({ category, setFeedbackMessage, setFeedbackColor, o
         setOpen(true);
     };
 
-    const handleConfirmDelete = async (event) => {
+    const handleConfirmDelete = async (event: MouseEvent<HTMLButtonElement>) => {
         event.preventDefault(); // Prevent form submission
         console.log('Deleting category:', category);
         // Call the onDeleteCategory function to delete the category

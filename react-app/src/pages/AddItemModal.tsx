@@ -1,8 +1,15 @@
-import React, { useState } from 'react';
+import React, { FormEvent, useState } from 'react';
 import Modal from "@mui/material/Modal";
 import Button from '@mui/material/Button';
 
-function AddItemModal({ category, setFeedbackMessage, setFeedbackColor, onItemAdd }) {
+interface Props {
+    category: string;
+    setFeedbackMessage: React.Dispatch<React.SetStateAction<string>>;
+    setFeedbackColor: React.Dispatch<React.SetStateAction<string>>;
+    onItemAdd: () => void;
+}
+
+function AddItemModal({ category, setFeedbackMessage, setFeedbackColor, onItemAdd } : Props) {
     const [itemName, setItemName] = useState('');
     const [itemAmount, setItemAmount] = useState('');
     const [itemExpiration, setItemExpiration] = useState('');
@@ -16,7 +23,7 @@ function AddItemModal({ category, setFeedbackMessage, setFeedbackColor, onItemAd
         setOpen(true);
     };
 
-    const addItem = async (event) => {
+    const addItem = async (event:FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         console.log('Adding item:', category, itemName, itemAmount, itemExpiration);
         const token = localStorage.getItem('token');

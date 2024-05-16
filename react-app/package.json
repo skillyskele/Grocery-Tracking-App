@@ -10,6 +10,7 @@
     "start": "run start"
   },
   "dependencies": {
+    "@mui/x-charts": "^7.4.0",
     "bcrypt": "^5.1.1",
     "bootstrap": "^5.2.3",
     "jsonwebtoken": "^9.0.2",
