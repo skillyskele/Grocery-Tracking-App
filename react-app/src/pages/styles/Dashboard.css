@@ -1,0 +1,40 @@
+.dashboard-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: #f0f0f0;
+}
+
+.content {
+    flex: 1;
+    display: flex;
+}
+
+.left-half {
+    flex: 1;
+    overflow-y: auto; /* Enable scrolling if content exceeds the container */
+    padding: 20px;
+    background-color: #fff;
+}
+
+.right-half {
+    flex: 1;
+    padding: 20px;
+    background-color: #f0f0f0;
+}
+
+.action-buttons {
+    display: flex;
+    align-items: center;
+}
+
+.action-buttons button {
+    margin-left: 10px;
+    font-size: 12px;
+}

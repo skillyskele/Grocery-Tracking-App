@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Modal from "@mui/material/Modal";
 import Button from '@mui/material/Button';
 
-function CategoryModal({setFeedbackMessage, setFeedbackColor}) {
+function CategoryModal({setFeedbackMessage, setFeedbackColor, onAddCategory}) {
     const [category, setCategoryName] = useState('');
     const [open, setOpen] = useState(false);
 
@@ -26,6 +26,7 @@ function CategoryModal({setFeedbackMessage, setFeedbackColor}) {
             setFeedbackMessage(data.message);
             if (response.ok) {
                 setFeedbackColor('green');
+                onAddCategory();
             } else {
                 setFeedbackColor('red');
             }
@@ -33,7 +34,8 @@ function CategoryModal({setFeedbackMessage, setFeedbackColor}) {
             console.error('Client: Error adding item:', error);
             setFeedbackMessage('Error adding item');
             setFeedbackColor('red');
-        }          
+        }     
+        handleClose();     
     }
 
     const handleClose = () => {

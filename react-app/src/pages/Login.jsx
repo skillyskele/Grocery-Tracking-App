@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
   const [username, setUsername] = useState('');
@@ -44,30 +44,44 @@ function Login() {
   };
 
   return (
-    <div style={{ width: "100vh", height: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
-      <h4>Sign in Page</h4>
-      <div id="message-container" style={{ color: messageColor }}>
-        {message}
+    <div style={{ 
+      width: "100%",
+      height: "100vh",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "center",
+      position: "relative",
+    }}>
+      <div style={{ 
+        backgroundColor: "rgba(255, 255, 255, 0.8)",
+        padding: "20px",
+        borderRadius: "10px",
+        boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+      }}>
+        <h2 style={{ fontFamily: "Arial", marginBottom: "20px" }}>Sign in</h2>
+        <form onSubmit={handleLogin} style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+          <TextField
+            id="username"
+            label="Username"
+            variant="outlined"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            style={{ marginBottom: "15px" }}
+          />
+          <TextField
+            id="password"
+            label="Password"
+            type="password"
+            variant="outlined"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            style={{ marginBottom: "15px" }}
+          />
+          <Button variant="contained" type="submit" style={{ marginBottom: "15px", backgroundColor: "#4caf50", color: "white" }}>Login</Button>
+        </form>
+        <p style={{ marginTop: "10px", cursor: "pointer" }} onClick={handleRegister}>Don't have an account? Sign up</p>
       </div>
-      <form id="login" onSubmit={handleLogin}>
-        <TextField 
-          id="username" 
-          label="Enter Username" 
-          variant="outlined" 
-          value={username} 
-          onChange={(e) => setUsername(e.target.value)} 
-        />
-        <TextField 
-          id="password" 
-          label="Enter Password" 
-          type="password" 
-          variant="outlined" 
-          value={password} 
-          onChange={(e) => setPassword(e.target.value)} 
-        />
-        <Button variant="contained" type="submit" onClick={handleLogin}>Login</Button>
-      </form>
-      <Button variant="contained" type="submit" onClick={handleRegister}>Register</Button>
     </div>
   );
 }
