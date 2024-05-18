@@ -1,6 +1,8 @@
 import React, { FormEvent, useState } from 'react';
 import Modal from "@mui/material/Modal";
-import Button from '@mui/material/Button';
+import { IconButton } from '@mui/material';
+import './styles/AddItemModal.css'; // Make sure this path is correct
+import AddCircle from '@mui/icons-material/AddCircle';
 
 interface Props {
     category: string;
@@ -9,23 +11,17 @@ interface Props {
     onItemAdd: () => void;
 }
 
-function AddItemModal({ category, setFeedbackMessage, setFeedbackColor, onItemAdd } : Props) {
+function AddItemModal({ category, setFeedbackMessage, setFeedbackColor, onItemAdd }: Props) {
     const [itemName, setItemName] = useState('');
     const [itemAmount, setItemAmount] = useState('');
     const [itemExpiration, setItemExpiration] = useState('');
     const [open, setOpen] = useState(false);
 
-    const handleClose = () => {
-        setOpen(false);
-    };
+    const handleClose = () => setOpen(false);
+    const handleOpen = () => setOpen(true);
 
-    const handleOpen = () => {
-        setOpen(true);
-    };
-
-    const addItem = async (event:FormEvent<HTMLFormElement>) => {
+    const addItem = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        console.log('Adding item:', category, itemName, itemAmount, itemExpiration);
         const token = localStorage.getItem('token');
         if (!token) return;
         try {
@@ -36,7 +32,7 @@ function AddItemModal({ category, setFeedbackMessage, setFeedbackColor, onItemAd
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    category: category,
+                    category,
                     name: itemName,
                     amount: itemAmount,
                     expiration: itemExpiration
@@ -60,23 +56,13 @@ function AddItemModal({ category, setFeedbackMessage, setFeedbackColor, onItemAd
 
     return (
         <div>
-            <Button variant="text" type="submit" onClick={handleOpen}>Add Item</Button>
+            <IconButton aria-label="Add item" onClick={handleOpen}><AddCircle /></IconButton>
             <Modal
                 onClose={handleClose}
                 open={open}
-                style={{
-                    position: "absolute",
-                    border: "2px solid #000",
-                    backgroundColor: "lightgray",
-                    boxShadow: "2px solid black",
-                    height: 200,
-                    width: 240,
-                    margin: "auto",
-                    padding: "2%",
-                    color: "white",
-                }}
+                className="modal-container" // Uses modal-container styles
             >
-                <form onSubmit={addItem}>
+                <form onSubmit={addItem} className="modal-form">
                     <input
                         type="text"
                         placeholder="Enter item name"
@@ -98,7 +84,7 @@ function AddItemModal({ category, setFeedbackMessage, setFeedbackColor, onItemAd
                         onChange={(e) => setItemExpiration(e.target.value)}
                         required
                     />
-                    <button type="submit">Add Item</button>
+                    <button type="submit" className="modal-button modal-button-primary">Add Item</button>
                 </form>
             </Modal>
         </div>

@@ -29,12 +29,3 @@
     background-color: #f0f0f0;
 }
 
-.action-buttons {
-    display: flex;
-    align-items: center;
-}
-
-.action-buttons button {
-    margin-left: 10px;
-    font-size: 12px;
-}

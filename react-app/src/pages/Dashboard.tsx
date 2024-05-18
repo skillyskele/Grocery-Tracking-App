@@ -1,45 +1,22 @@
 import React, { useState, useEffect } from "react";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
-import AddItemModal from "./AddItemModal";
 import CategoryModal from "./CategoryModal";
-import DeleteCategoryModal from "./deleteCategoryModal";
 import IngredientBarGraph from "./BarGraph";
+import CategoryComponent from "./CategoryComponent";
+import setDashboardData from "./setDashboardData";
+import { Item, CategoryData } from "./types";
 import "./styles/Dashboard.css"; // Import CSS file for styling
 
-interface Item {
-  name: string;
-  expiration: string;
-  amount: number;
-}
-
-interface ProcessedData {
-  category: string;
-  items: Item[];
-}
-
-interface IngredientData {
-  ingredient: string;
-  quantity: number;
-}
-
-interface BarGraphProps {
-  ingredientData: IngredientData[]
-}
-
 const Dashboard: React.FC = () => {
-  const [welcomeMessage, setWelcomeMessage] = useState<string>("");
-  const [feedbackColor, setFeedbackColor] = useState<string>("");
-  const [feedbackMessage, setFeedbackMessage] = useState<string>("");
-  const [processedData, setProcessedData] = useState<ProcessedData[]>([]);
-  const [barGraphProps, setBarGraphProps] = useState<BarGraphProps>({ ingredientData: [] });
-
-  // [
-  //   { ingredient: 'Flour', quantity: 100 },
-  //   { ingredient: 'Sugar', quantity: 200 },
-  //   { ingredient: 'Milk', quantity: 150 },
-  //   // Add more ingredient data as needed
-  // ];
+  const {
+    welcomeMessage,
+    feedbackColor,
+    feedbackMessage,
+    processedData,
+    barGraphProps,
+    setFeedbackMessage,
+    setFeedbackColor,
+    fetchDashboardData,
+  } = setDashboardData();
 
   const handleDeleteItem = async (
     category: string,
@@ -79,62 +56,6 @@ const Dashboard: React.FC = () => {
     }
   };
 
-  const fetchDashboardData = async (): Promise<void> => {
-    const token: string | null = localStorage.getItem("token");
-    if (!token) return;
-
-    try {
-      const response: Response = await fetch(
-        "http://localhost:3001/api/users/dashboard",
-        {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
-      const data: { message: string; groceryList: Record<string, Item[]> } =
-        await response.json();
-
-      if (response.ok) {
-        const processedData: ProcessedData[] = Object.entries(
-          data.groceryList
-        ).map(([category, items]) => ({
-          category,
-          items,
-        }));
-        setProcessedData(processedData); // Update state with processed data
-
-        const allIngredients: BarGraphProps = { ingredientData: []};
-        processedData.forEach(({ items }) => {
-          items.forEach((item) => {
-            allIngredients.ingredientData.push({
-              ingredient: item.name,
-              quantity: item.amount,
-            });
-          });
-        });
-        setBarGraphProps(allIngredients);
-        const barGraphData = allIngredients.ingredientData.map(({ ingredient, quantity }) => ({
-          data: quantity, // Assuming quantity is a numerical value
-          label: ingredient,
-        }));
-        console.log("hi", barGraphData);
-        setWelcomeMessage(data.message);
-        console.log(processedData);
-      } else {
-        throw new Error(data.message || "Failed to fetch dashboard data");
-      }
-    } catch (error) {
-      console.error("Error fetching dashboard data:", error);
-    }
-  };
-
-  useEffect(() => {
-    fetchDashboardData();
-  }, []);
-
   return (
     <div className="dashboard-container">
       <header className="header">
@@ -146,46 +67,15 @@ const Dashboard: React.FC = () => {
           <p>{welcomeMessage}</p>
           <p style={{ color: feedbackColor }}>{feedbackMessage}</p>
           {processedData.length === 0 && <p>No groceries in stock</p>}
-          {processedData.map((entries, index) => (
+          {processedData.map((categoryData, index) => (
             <div key={index} className="category-container">
-              <div className="category-header">
-                <h2>{entries.category}</h2>
-                <div className="action-buttons">
-                  <DeleteCategoryModal
-                    category={entries.category}
-                    setFeedbackMessage={setFeedbackMessage}
-                    setFeedbackColor={setFeedbackColor}
-                    onDeleteCategory={fetchDashboardData}
-                  />
-                  <AddItemModal
-                    category={entries.category}
-                    setFeedbackMessage={setFeedbackMessage}
-                    setFeedbackColor={setFeedbackColor}
-                    onItemAdd={fetchDashboardData}
-                  />
-                </div>
-              </div>
-              <ul className="item-list">
-                {entries.items.map((item, itemIndex) => (
-                  <li key={itemIndex} className="item">
-                    <div className="item-details">
-                      <div className="item-name">{item.name}</div>
-                      <div className="item-expiration">
-                        Expiration Date: {item.expiration}
-                      </div>
-                      <div className="item-amount">Amount: {item.amount}</div>
-                      <Button
-                        variant="outlined"
-                        color="error"
-                        size="small"
-                        onClick={() => handleDeleteItem(entries.category, item)}
-                      >
-                        Delete
-                      </Button>
-                    </div>
-                  </li>
-                ))}
-              </ul>
+              <CategoryComponent
+                categoryData={categoryData}
+                onDeleteItem={handleDeleteItem}
+                onCategoryAction={fetchDashboardData}
+                setFeedbackMessage={setFeedbackMessage}
+                setFeedbackColor={setFeedbackColor}
+              ></CategoryComponent>
             </div>
           ))}
         </div>
