@@ -9,12 +9,13 @@ export interface Item {
     items: Item[];
   }
   
-  export interface IngredientData {
-    ingredient: string;
-    quantity: number;
-  }
+ export interface FeedbackMessageProps {
+  message: string;
+  color: string;
+  feedbackstate: number;
+ }
   
   export interface BarGraphProps {
-    ingredientData: IngredientData[];
+    ingredientData: { [ingredient: string]: number };
   }
   

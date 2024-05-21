@@ -1,6 +1,43 @@
-.action-buttons {
-    display: flex;
-    align-items: center;
-    gap: 10px; /* Adds space between buttons */
-}
+.category-container {
+    margin-bottom: 20px;
+  }
 
+  .item-list {
+    max-height: 200px; 
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;  /* Center items horizontally */
+    overflow-y: auto; 
+    scrollbar-width: none; 
+    -ms-overflow-style: none; 
+    border: right 1px solid #000000;
+  }
+
+  .item-component {
+    width: 100%;
+    display: flex;
+    justify-content: left; 
+  }
+  
+  .category-header {
+    display: flex;
+    align-items: center; 
+    justify-content: space-between; 
+  }
+  
+  .action-buttons {
+    display: flex;
+    align-items: center; 
+  }
+  
+  .delete-category-button {
+    margin-right: 10px; 
+  }
+  
+  .add-item-action {
+    margin-top: 20px; 
+    display: flex;
+    justify-content: flex-end;
+  }
+  

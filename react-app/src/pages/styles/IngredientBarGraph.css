@@ -1,0 +1,14 @@
+.bargraph-container {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .bargraph {
+    width: 80%; /* Adjust this value as needed */
+    max-width: 600px;
+    height: 350px;
+  }
+  

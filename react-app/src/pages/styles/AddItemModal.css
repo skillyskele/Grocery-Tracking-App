@@ -1,33 +1,43 @@
-/* AddItemModal.css */
-.modal-content {
+.add-item-modal-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: auto;
+    padding: 24px;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Adjusted box shadow */
+    outline: none;
+    border-radius: 4px;
+}
+
+.add-item-modal-content {
+    margin-bottom: 24px;
+}
+
+.add-item-modal-form {
     display: flex;
     flex-direction: column;
-    padding: 20px;
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    max-width: 300px;
-    margin: auto;
 }
 
-.modal-input {
-    padding: 10px;
-    margin-bottom: 15px;
+.add-item-modal-form input {
+    margin-bottom: 16px;
+    padding: 8px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    font-size: 16px;
+    outline: none;
 }
 
-.modal-button {
-    padding: 10px 20px;
-    background-color: #4CAF50;
-    color: white;
+.add-item-modal-button {
+    padding: 8px 16px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    transition: background-color 0.3s;
+    font-size: 1rem;
+    background-color: #1976d2;
+    color: white;
 }
 
-.modal-button:hover {
-    background-color: #45a049;
+.add-item-modal-button:hover {
+    background-color: #005aa7; /* Darker color on hover */
 }

@@ -11,7 +11,6 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  // You can add additional fields as needed:
   email: {
     type: String,
     required: true,

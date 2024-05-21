@@ -4,6 +4,7 @@ import IngredientBarGraph from "./BarGraph";
 import CategoryComponent from "./CategoryComponent";
 import setDashboardData from "./setDashboardData";
 import { Item, CategoryData } from "./types";
+import marcelineImage from "./images/marshall_lee.jpg";
 import "./styles/Dashboard.css"; // Import CSS file for styling
 
 const Dashboard: React.FC = () => {
@@ -13,10 +14,21 @@ const Dashboard: React.FC = () => {
     feedbackMessage,
     processedData,
     barGraphProps,
+    feedbackState,
     setFeedbackMessage,
     setFeedbackColor,
     fetchDashboardData,
   } = setDashboardData();
+
+  const [isVisible, setIsVisible] = useState(false);
+  useEffect(() => {
+    setIsVisible(true);
+    const timer = setTimeout(() => {
+        console.log("timed out");
+      setIsVisible(false);
+    }, 3000); // Hide the message after 5 seconds
+    return () => clearTimeout(timer);
+  }, [feedbackState]);
 
   const handleDeleteItem = async (
     category: string,
@@ -59,14 +71,15 @@ const Dashboard: React.FC = () => {
   return (
     <div className="dashboard-container">
       <header className="header">
-        <div className="app-name">[Name of App]</div>
-        <div className="logo">[Logo]</div>
+        <div className="app-name">Grocery Tracker</div>
+        <img src={marcelineImage} alt="logo" className="grocery-app-logo"></img>
       </header>
       <div className="content">
         <div className="left-half">
           <p>{welcomeMessage}</p>
-          <p style={{ color: feedbackColor }}>{feedbackMessage}</p>
-          {processedData.length === 0 && <p>No groceries in stock</p>}
+          <div id="feedback-toast" className={isVisible ? "show" : "none"}>
+  {feedbackMessage}
+</div>          {processedData.length === 0 && <p>No groceries in stock</p>}
           {processedData.map((categoryData, index) => (
             <div key={index} className="category-container">
               <CategoryComponent
@@ -83,15 +96,18 @@ const Dashboard: React.FC = () => {
           className="right-half"
           style={{ width: "50%", height: "100%", padding: "20px" }}
         >
-          <div>Hello, we'll be using this space soon</div>
-          <IngredientBarGraph ingredientData={barGraphProps.ingredientData} />
+          <div className="current-ingredients">Current Ingredients</div>
+          <IngredientBarGraph {...barGraphProps} />
+          {/* interesting moment when I had to pass in the whole barGraphProps because it kept insisting I was passing in { [ingredient: string]: number } instead of BarGraphProps */}
         </div>
       </div>
-      <CategoryModal
-        setFeedbackMessage={setFeedbackMessage}
-        setFeedbackColor={setFeedbackColor}
-        onAddCategory={fetchDashboardData}
-      />
+      <div className="addCategoryModal">
+        <CategoryModal
+          setFeedbackMessage={setFeedbackMessage}
+          setFeedbackColor={setFeedbackColor}
+          onAddCategory={fetchDashboardData}
+        />
+      </div>
     </div>
   );
 };

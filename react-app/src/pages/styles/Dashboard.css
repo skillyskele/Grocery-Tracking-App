@@ -1,4 +1,14 @@
+.app-name {
+    font-family: Arial, sans-serif; /* Choose your preferred font family */
+    font-size: 24px; /* Adjust the font size as needed */
+    font-weight: bold; /* Make the text bold for emphasis */
+    color: #333; /* Choose your preferred text color */
+    text-align: center; /* Center the text horizontally */
+  }
+  
+
 .dashboard-container {
+    position: relative;
     display: flex;
     flex-direction: column;
     height: 100vh;
@@ -7,7 +17,7 @@
 .header {
     display: flex;
     justify-content: space-between;
-    padding: 10px;
+    padding: 3px;
     background-color: #f0f0f0;
 }
 
@@ -29,3 +39,63 @@
     background-color: #f0f0f0;
 }
 
+.addCategoryModal {
+    position: relative;
+    bottom: 20px;
+    left: 20px;
+
+}
+
+.current-ingredients {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+
+  .grocery-app-logo {
+    width: 40px;
+    height: auto;
+  }
+
+  #feedback-toast {
+    visibility: hidden;
+    min-width: 250px;
+    margin-left: -125px;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 2px;
+    padding: 16px;
+    position: fixed;
+    z-index: 1;
+    left: 50%;
+    bottom: 30px;
+    font-size: 17px;
+  }
+
+  #feedback-toast.show {
+    visibility: visible;
+    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    animation: fadein 0.5s, fadeout 0.5s 2.5s;
+  }
+  
+  @-webkit-keyframes fadein {
+    from {bottom: 0; opacity: 0;} 
+    to {bottom: 30px; opacity: 1;}
+  }
+  
+  @keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 30px; opacity: 1;}
+  }
+  
+  @-webkit-keyframes fadeout {
+    from {bottom: 30px; opacity: 1;} 
+    to {bottom: 0; opacity: 0;}
+  }
+  
+  @keyframes fadeout {
+    from {bottom: 30px; opacity: 1;}
+    to {bottom: 0; opacity: 0;}
+  }
+  

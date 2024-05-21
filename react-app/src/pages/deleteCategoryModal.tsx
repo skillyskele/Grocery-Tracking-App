@@ -58,28 +58,28 @@ function DeleteCategoryModal({
 
   return (
     <div>
-      <IconButton aria-label={`delete ${category}`} onClick={handleOpen}>
+      <IconButton className="deleteCategoryButton" aria-label={`delete ${category}`} onClick={handleOpen}>
         <RemoveCircleIcon />
       </IconButton>
       <Modal onClose={handleClose} open={open}>
-        <div className="modal-container">
-          <p className="modal-header">Confirm Deletion</p>
-          <p className="modal-content">
+        <div className="delete-category-modal-container">
+          <p className="delete-category-modal-header">Confirm Deletion</p>
+          <p className="delete-category-modal-content">
             Deleting this category will delete all of its items. Confirm?
           </p>
-          <div className="modal-actions">
-            <button
-              className="modal-button modal-button-secondary"
+          <div className="delete-category-modal-actions">
+            <Button
+              className="delete-category-modal-button modal-button-secondary"
               onClick={handleClose}
             >
               Cancel
-            </button>
-            <button
-              className="modal-button modal-button-primary"
+            </Button>
+            <Button
+              className="delete-category-modal-button modal-button-primary"
               onClick={handleConfirmDelete}
             >
               Confirm
-            </button>
+            </Button>
           </div>
         </div>
       </Modal>

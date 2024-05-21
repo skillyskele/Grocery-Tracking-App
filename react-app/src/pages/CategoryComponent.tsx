@@ -3,6 +3,7 @@ import AddItemModal from "./AddItemModal";
 import DeleteCategoryModal from "./DeleteCategoryModal";
 import { CategoryData, Item } from "./types";
 import "./styles/CategoryComponent.css";
+import { Paper } from "@mui/material";
 import ItemComponent from "./ItemComponent";
 
 interface CategoryComponentProps {
@@ -24,30 +25,39 @@ const CategoryComponent: React.FC<CategoryComponentProps> = ({
     <div className="category-header">
       <h2>{categoryData.category}</h2>
       <div className="action-buttons">
-        <DeleteCategoryModal
-          category={categoryData.category}
-          setFeedbackMessage={setFeedbackMessage}
-          setFeedbackColor={setFeedbackColor}
-          onDeleteCategory={onCategoryAction}
-        />
-        <AddItemModal
-          category={categoryData.category}
-          setFeedbackMessage={setFeedbackMessage}
-          setFeedbackColor={setFeedbackColor}
-          onItemAdd={onCategoryAction}
-        />
+        <div className="delete-action">
+          <DeleteCategoryModal
+            category={categoryData.category}
+            setFeedbackMessage={setFeedbackMessage}
+            setFeedbackColor={setFeedbackColor}
+            onDeleteCategory={onCategoryAction}
+          />
+        </div>
+        <div className="add-action">
+          <AddItemModal
+            category={categoryData.category}
+            setFeedbackMessage={setFeedbackMessage}
+            setFeedbackColor={setFeedbackColor}
+            onItemAdd={onCategoryAction}
+          />
+        </div>
       </div>
     </div>
-    <ul className="item-list">
-      {categoryData.items.map((item, index) => (
-        <ItemComponent
-          key={index}
-          item={item}
-          category={categoryData.category}
-          onDelete={onDeleteItem}
-        />
-      ))}
-    </ul>
+    <div className="paper-container">
+      <Paper elevation={2}>
+        <ul className="item-list">
+          {categoryData.items.map((item, index) => (
+            <div className="item-component" key={index}>
+              <ItemComponent
+                item={item}
+                category={categoryData.category}
+                onDelete={onDeleteItem}
+              />
+            </div>
+          ))}
+        </ul>
+      </Paper>
+    </div>
   </div>
 );
 

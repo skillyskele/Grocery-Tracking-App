@@ -6,8 +6,9 @@ const setDashboardData = () => {
   const [feedbackColor, setFeedbackColor] = useState<string>("");
   const [feedbackMessage, setFeedbackMessage] = useState<string>("");
   const [processedData, setProcessedData] = useState<CategoryData[]>([]);
-  const [barGraphProps, setBarGraphProps] = useState<BarGraphProps>({ ingredientData: [] });
-
+  const [barGraphProps, setBarGraphProps] = useState<BarGraphProps>({ingredientData: {}});
+  const [feedbackState, setFeedbackState] = useState<boolean>(false);
+  
   const fetchDashboardData = async (): Promise<void> => {
     const token: string | null = localStorage.getItem("token");
     if (!token) return;
@@ -29,17 +30,20 @@ const setDashboardData = () => {
         }));
         setProcessedData(processedData);
 
-        const allIngredients: BarGraphProps = { ingredientData: [] };
+        const allIngredients: BarGraphProps={ingredientData: {}};
         processedData.forEach(({ items }) => {
-          items.forEach((item) => {
-            allIngredients.ingredientData.push({
-              ingredient: item.name,
-              quantity: item.amount,
-            });
+          items.forEach((item) => { //note the reduce() function could be used in this scenario
+            if (allIngredients.ingredientData[item.name]) {
+              allIngredients.ingredientData[item.name] += +item.amount; //used unary operator + instead of Number()
+            } else {
+              allIngredients.ingredientData[item.name] = +item.amount;
+            }
           });
         });
         setBarGraphProps(allIngredients);
         setWelcomeMessage(data.message);
+        setFeedbackState(!feedbackState);
+        console.log(feedbackState);
       } else {
         throw new Error(data.message || "Failed to fetch dashboard data");
       }
@@ -58,6 +62,7 @@ const setDashboardData = () => {
     feedbackMessage,
     processedData,
     barGraphProps,
+    feedbackState,
     setFeedbackMessage,
     setFeedbackColor,
     fetchDashboardData,
