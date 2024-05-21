@@ -41,3 +41,8 @@
 .add-item-modal-button:hover {
     background-color: #005aa7; /* Darker color on hover */
 }
+
+.horizontal-inputs { /*play around with this, the inputs look a little funny*/
+    display: flex;
+    align-items: center;
+}

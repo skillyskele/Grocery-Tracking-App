@@ -1,4 +1,9 @@
 import mongoose from 'mongoose';
+const macroSchema = new mongoose.Schema({
+  protein: { type: Number, default: 0 },
+  carbs: { type: Number, default: 0 },
+  fat: { type: Number, default: 0 }
+});
 
 const groceryListSchema = new mongoose.Schema({
   groceries: {
@@ -7,7 +12,8 @@ const groceryListSchema = new mongoose.Schema({
       type: {
         name: String,
         amount: String,
-        expiration: { type: Date, default: Date.now }
+        expiration: { type: Date, default: Date.now }, 
+        macros: {type: macroSchema, default: {} }
       }
     }],
     default: new Map()

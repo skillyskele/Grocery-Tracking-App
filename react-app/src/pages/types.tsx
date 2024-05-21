@@ -1,8 +1,15 @@
 export interface Item {
     name: string;
     expiration: string;
-    amount: number;
+    amount: string;
+    macros: Macros;
   }
+
+export interface Macros {
+  protein: number
+  carbs: number
+  fat: number
+}
   
   export interface CategoryData {
     category: string;
@@ -19,3 +26,8 @@ export interface Item {
     ingredientData: { [ingredient: string]: number };
   }
   
+  export interface PieChartProps {
+    totalProtein: number
+    totalCarbs: number
+    totalFat: number
+  }

@@ -9,7 +9,10 @@
     padding-top: 10px;
     padding-right: 20px;
     padding-bottom: 5px; 
+    font-weight: lighter;
+    font-family: Georgia, 'Times New Roman', Times, serif;
 }
+
 
 .delete-item-x {
     position: absolute;

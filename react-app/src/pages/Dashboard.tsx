@@ -5,6 +5,7 @@ import CategoryComponent from "./CategoryComponent";
 import setDashboardData from "./setDashboardData";
 import { Item, CategoryData } from "./types";
 import marcelineImage from "./images/marshall_lee.jpg";
+import MacrosPieChart from "./MacrosPieChart";
 import "./styles/Dashboard.css"; // Import CSS file for styling
 
 const Dashboard: React.FC = () => {
@@ -14,6 +15,7 @@ const Dashboard: React.FC = () => {
     feedbackMessage,
     processedData,
     barGraphProps,
+    pieChartProps,
     feedbackState,
     setFeedbackMessage,
     setFeedbackColor,
@@ -24,7 +26,7 @@ const Dashboard: React.FC = () => {
   useEffect(() => {
     setIsVisible(true);
     const timer = setTimeout(() => {
-        console.log("timed out");
+      console.log("timed out");
       setIsVisible(false);
     }, 3000); // Hide the message after 5 seconds
     return () => clearTimeout(timer);
@@ -76,10 +78,11 @@ const Dashboard: React.FC = () => {
       </header>
       <div className="content">
         <div className="left-half">
-          <p>{welcomeMessage}</p>
+          <div className="welcome-message">{welcomeMessage}</div>
           <div id="feedback-toast" className={isVisible ? "show" : "none"}>
-  {feedbackMessage}
-</div>          {processedData.length === 0 && <p>No groceries in stock</p>}
+            {feedbackMessage}
+          </div>
+          {processedData.length === 0 && <p>No groceries in stock</p>}
           {processedData.map((categoryData, index) => (
             <div key={index} className="category-container">
               <CategoryComponent
@@ -94,11 +97,17 @@ const Dashboard: React.FC = () => {
         </div>
         <div
           className="right-half"
-          style={{ width: "50%", height: "100%", padding: "20px" }}
         >
-          <div className="current-ingredients">Current Ingredients</div>
-          <IngredientBarGraph {...barGraphProps} />
-          {/* interesting moment when I had to pass in the whole barGraphProps because it kept insisting I was passing in { [ingredient: string]: number } instead of BarGraphProps */}
+          <div className="ingredients-summary">Ingredients Summary</div>
+            <div className="graphs-container">
+              <div className="bargraph-title">Ingredients Ratio</div>
+              <IngredientBarGraph {...barGraphProps} />
+              {/* interesting moment when I had to pass in the whole barGraphProps because it kept insisting I was passing in { [ingredient: string]: number } instead of BarGraphProps */}
+              <div className="bargraph-title">Macronutrients Summary</div>
+              <MacrosPieChart
+                {...pieChartProps}
+              />
+            </div>
         </div>
       </div>
       <div className="addCategoryModal">

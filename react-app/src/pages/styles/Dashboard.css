@@ -29,16 +29,34 @@
 .left-half {
     flex: 1;
     overflow-y: auto; /* Enable scrolling if content exceeds the container */
-    padding: 20px;
+    padding: 0px;
     background-color: #fff;
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.welcome-message {
+  padding:20px;
+  background-color: rgb(105, 230, 105);
+  font-family:Georgia, 'Times New Roman', Times, serif;
+  color:white;
+  
 }
 
 .right-half {
     flex: 1;
-    padding: 20px;
-    background-color: #f0f0f0;
+    padding: 0px;
+    height:100%;
+    width: 50%;
 }
-
+.graphs-container {
+  display: flex;
+  flex-direction: column; /* Aligns children vertically */
+  justify-content: space-evenly; /* Distributes space evenly around the children */
+  align-items: center; /* Aligns children horizontally in the center */
+  height: 100%; /* Ensure the parent div has a defined height */
+}
 .addCategoryModal {
     position: relative;
     bottom: 20px;
@@ -46,10 +64,13 @@
 
 }
 
-.current-ingredients {
+.ingredients-summary { /*for now, it's font weight is heavy, but I deter this by specifying for each item component that it should not be bolded*/
     font-size: 20px;
     font-weight: bold;
-    margin-bottom: 10px;
+    color:white;
+    background-color: rgb(117, 232, 117);
+    font-family:Georgia, 'Times New Roman', Times, serif;
+    padding: 20px;
   }
 
   .grocery-app-logo {

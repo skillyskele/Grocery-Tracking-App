@@ -1,0 +1,5 @@
+  /* Define styles for the PieArcLabel component */
+  .PieArcLabel-root {
+    fill: white;
+    font-weight: bold;
+  }

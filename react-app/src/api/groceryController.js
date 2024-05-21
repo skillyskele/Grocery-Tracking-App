@@ -34,23 +34,22 @@ export default class groceryController {
     static async addGroceryItem(req, res) {
         const userId = req.user.userId;
         const category = req.body.category;
-        const itemInfo = { name: req.body.name, amount: req.body.amount, expiration: req.body.expiration };
-        
+        const itemInfo = { name: req.body.name, amount: req.body.amount, expiration: req.body.expiration, macros: req.body.macros, units: req.body.units };
+
         try {
             // Fetch the user data from the database
             let userData = await User.findById(userId);
             let groceryData = await GroceryList.findById(userData.groceryList) //document
             let groceryList = groceryData.groceries //map
-            console.log("here's the groceryList", groceryList)
             const categoryExists = groceryList.has(category); 
 
             // Check if the category exists in the user's grocery list
             if (categoryExists) {
                 // Add the item to the specified category
-                console.log(`here's the map for ${category} `, groceryList.get(category)) //general item map
                 let itemArray = groceryList.get(category)
                 itemArray.push(itemInfo)
                 groceryList.set(category, itemArray)
+                console.log(itemArray)
                 await groceryData.save();
                 return res.status(200).json({ message: 'Item added successfully' });
             } else {
