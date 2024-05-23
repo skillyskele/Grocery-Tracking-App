@@ -100,10 +100,10 @@ const Dashboard: React.FC = () => {
         >
           <div className="ingredients-summary">Ingredients Summary</div>
             <div className="graphs-container">
-              <div className="bargraph-title">Ingredients Ratio</div>
+              <div className="graph-titles">Category Ingredients Breakdown</div>
               <IngredientBarGraph {...barGraphProps} />
               {/* interesting moment when I had to pass in the whole barGraphProps because it kept insisting I was passing in { [ingredient: string]: number } instead of BarGraphProps */}
-              <div className="bargraph-title">Macronutrients Summary</div>
+              <div className="graph-titles">Macronutrients Summary</div>
               <MacrosPieChart
                 {...pieChartProps}
               />

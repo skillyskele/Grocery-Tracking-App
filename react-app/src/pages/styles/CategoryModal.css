@@ -1,0 +1,38 @@
+/* CategoryModal.css */
+.add-category-modal-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.5); /* Dark background for modal overlay */
+  }
+  
+  .add-category-modal-form {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    font-family: cursive;
+  }
+  
+  .category-modal-button-container {
+    display: flex;
+    justify-content: space-around;
+  }
+
+  .add-category-modal-form input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-family: cursive;
+  }
+  
+  .add-category-button-container {
+    font-family: cursive;
+    width:100%
+  }
+  
