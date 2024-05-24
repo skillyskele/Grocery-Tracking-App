@@ -23,8 +23,13 @@ export interface Macros {
  }
   
   export interface BarGraphProps {
-    ingredientData: { [ingredient: string]: number };
+    ingredientData: BarGraphEntry[];
   }
+
+  export interface BarGraphEntry {
+    category: string;
+    [key: string]: number | string;
+}
   
   export interface PieChartProps {
     totalProtein: number

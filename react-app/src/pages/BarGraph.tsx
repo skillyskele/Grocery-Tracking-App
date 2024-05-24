@@ -1,37 +1,39 @@
-import React from "react";
+import { createTheme, ThemeProvider, useTheme } from "@mui/material/styles";
 import { BarChart } from "@mui/x-charts/BarChart";
+import { useState } from "react";
+// import { Chance } from 'chance';
 import "./styles/IngredientBarGraph.css"; // Import the CSS file
 import { BarGraphProps } from "./types";
-import { Hidden } from "@mui/material";
-//xAxis={[{scaleType: 'band', dataKey: category}]}
-//series={[data: [amt 1], label: 'ingredient1'
+
+import {
+  cheerfulFiestaPalette,
+  mangoFusionPalette,
+} from "@mui/x-charts/colorPalettes";
+
+const categories = {
+  mangoFusion: mangoFusionPalette,
+  cheerfulFiesta: cheerfulFiestaPalette,
+} as const;
+
+const customPalette = [
+  "#FFB6C1", // LightPink
+  "#87CEFA", // LightSkyBlue
+  "#98FB98", // PaleGreen
+  "#FFD700", // Gold
+  "#FFA07A", // LightSalmon
+];
+
+type PaletteKey = keyof typeof categories;
 
 function IngredientBarGraph({ ingredientData }: BarGraphProps) {
-  // Create arrays for the chart
-  const ingredientNames = Object.keys(ingredientData);
-  const ingredientQuantities = Object.values(ingredientData);
+  const theme = useTheme();
+  const [colorScheme, setColorScheme] = useState<PaletteKey>("mangoFusion");
+  const [colorMode, setColorMode] = useState(theme.palette.mode);
 
-  const dataset = [
-    {
-      jellybeans: 5,
-      taffy: 4,
-      taro: 9,
-      pizza: 0,
-      john: 2,
-      billy: 2,
-      gyoza: 3,
-      lolli: 1,
-      j:2,
-      a:4,
-      n:7,
-      jo:5,
-      category: "Candy",
-    },
-    {
-      pizza: 1,
-      category: "Frozen Food",
-    },
-  ];
+  const newTheme = createTheme({ palette: { mode: colorMode } });
+  let dataset = ingredientData;
+
+  console.log("here's dataset", dataset);
   const x = [];
   for (let i = 0; i < dataset.length; i++) {
     x.push(...Object.keys(dataset[i]).filter((key) => key !== "category"));
@@ -39,47 +41,33 @@ function IngredientBarGraph({ ingredientData }: BarGraphProps) {
 
   const seriesData = x.map((key) => ({
     dataKey: key,
-    // label: key,
     stack: "A",
+    valueFormatter: (v: number) => {
+      return `${key} ${v}`;
+    },
   }));
 
-  console.log(seriesData);
-
   return (
-    <div className="bargraph-container">
-      <div className="bargraph">
-        <BarChart
-          // margin={{ top: 100, bottom: 10, left: 10, right:120 }}
-
-          dataset={dataset}
-          xAxis={[{ scaleType: "band", dataKey: "category" }]}
-          series={seriesData}
-          sx={{
-            "& .MuiChartsAxis-tickLabel tspan": { fontFamily: "cursive" },
-            "& .MuiCharsLegend-series text": {
-              fontFamily: "cursive",
-              // color: "rgb(105, 230, 105)",
-              fontSize: "12px",
-            },
-            
-          }}
-          // slotProps={{
-          //   legend: {
-          //     labelStyle: {
-          //       fontFamily: 'cursive',
-          //       fontSize: 14,
-          //       fill: 'green',
-          //     },
-          //     direction: 'column',
-          //     position: {
-          //       vertical: 'middle',
-          //       horizontal:'right'
-          //     },
-          //   }
-          // }}
-        />
+    <ThemeProvider theme={newTheme}>
+      <div className="bargraph-container">
+        <div className="bargraph">
+          <BarChart
+            colors={customPalette}
+            dataset={dataset}
+            xAxis={[{ scaleType: "band", dataKey: "category" }]}
+            series={seriesData}
+            sx={{
+              "& .MuiChartsAxis-tickLabel tspan": { fontFamily: "cursive" },
+              "& .MuiChartsLegend-series text": {
+                fontFamily: "cursive",
+                // color: "rgb(105, 230, 105)",
+                fontSize: "12px",
+              },
+            }}
+          />
+        </div>
       </div>
-    </div>
+    </ThemeProvider>
   );
 }
 

@@ -1,7 +1,12 @@
 import React from "react";
 import { PieChart, pieArcLabelClasses } from "@mui/x-charts/PieChart";
 import "./styles/MacrosPieChart.css";
+import { createTheme, ThemeProvider, useTheme } from "@mui/material/styles";
 import { PieChartProps } from "./types";
+
+import {
+  mangoFusionPalette
+} from '@mui/x-charts/colorPalettes';
 
 function MacrosPieChart({ totalProtein, totalCarbs, totalFat }: PieChartProps) {
   function macrosPercentageFinder(x: number, y: number, z: number): number[] {
@@ -15,11 +20,17 @@ function MacrosPieChart({ totalProtein, totalCarbs, totalFat }: PieChartProps) {
   }
 
   const percentages = macrosPercentageFinder(totalProtein, totalCarbs, totalFat);
+  const theme = useTheme();
+  const [colorMode, setColorMode] = React.useState(theme.palette.mode);
+  const newTheme = createTheme({ palette: { mode: colorMode } });
 
   return (
+    <ThemeProvider theme={newTheme}>
+
     <div className="macro-piechart-container">
       <div className="piechart">
         <PieChart
+        colors={mangoFusionPalette}
           series={[
             {
               innerRadius: 30,
@@ -35,6 +46,7 @@ function MacrosPieChart({ totalProtein, totalCarbs, totalFat }: PieChartProps) {
                 { id: 1, value: percentages[1], label: "Carbs" },
                 { id: 2, value: percentages[2], label: "Fats" },
               ],
+        
             },
           ]}
           sx={{
@@ -59,6 +71,7 @@ function MacrosPieChart({ totalProtein, totalCarbs, totalFat }: PieChartProps) {
         />
       </div>
     </div>
+    </ThemeProvider>
   );
 }
 
