@@ -8,6 +8,17 @@ import {
   mangoFusionPalette
 } from '@mui/x-charts/colorPalettes';
 
+const customPalette = [
+  '#36454F',  // charcoal grey (Font and accents)
+  '#98FB98',  // paleGreen (Background or highlight)
+  '#3CB371',  // mediumSeaGreen (Background for titles or highlighted areas)
+  '#FFFACD',  // lemonChiffon (Highlights and accents)
+  '#DAA520',  // goldenrod (Key accents or calls to action)
+  '#556B2F'   // darkOliveGreen (Depth and contrast for darker elements)
+];
+
+
+
 function MacrosPieChart({ totalProtein, totalCarbs, totalFat }: PieChartProps) {
   function macrosPercentageFinder(x: number, y: number, z: number): number[] {
     const total = x + y + z;
@@ -30,7 +41,7 @@ function MacrosPieChart({ totalProtein, totalCarbs, totalFat }: PieChartProps) {
     <div className="macro-piechart-container">
       <div className="piechart">
         <PieChart
-        colors={mangoFusionPalette}
+        colors={customPalette}
           series={[
             {
               innerRadius: 30,
@@ -62,7 +73,7 @@ function MacrosPieChart({ totalProtein, totalCarbs, totalFat }: PieChartProps) {
               labelStyle: {
                 fontFamily: 'cursive',
                 fontSize: 14,
-                fill: 'blue',
+                fill: '#4CAF50',
               },
             },
           }}

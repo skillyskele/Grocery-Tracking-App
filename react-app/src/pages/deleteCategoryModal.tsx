@@ -71,15 +71,28 @@ function DeleteCategoryModal({
             <Button
               className="delete-category-modal-button modal-button-secondary"
               onClick={handleClose}
+              variant="outlined"
+              sx={{
+                fontFamily: "cursive",
+                color: "#36454F",
+                borderColor: '#36454F',
+                "&:hover": { backgroundColor: "#dce775" },
+              }}
             >
               Cancel
             </Button>
             <Button
-              className="delete-category-modal-button modal-button-primary"
-              onClick={handleConfirmDelete}
-            >
-              Confirm
-            </Button>
+    className="delete-category-modal-button modal-button-primary"
+    onClick={handleConfirmDelete}
+    sx={{
+        fontFamily: "cursive",
+        color: "#F5FFFA",
+        backgroundColor: "#6DAE81", 
+        "&:hover": { backgroundColor: "#5E8C31" }, // Sea Green on hover
+    }}
+>
+    Confirm
+</Button>
           </div>
         </div>
       </Modal>

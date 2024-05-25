@@ -1,14 +1,27 @@
-import React, { useState, MouseEvent, FormEvent } from "react";
+import React, { useState, useEffect, MouseEvent, FormEvent } from "react";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
+import "./styles/Login.css";
+import CustomizedTextField from "./CustomizedTextField";
 
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [message, setMessage] = useState("");
-  const [messageColor, setMessageColor] = useState("");
+  const [feedbackMessage, setMessage] = useState("");
+  const [messageState, setMessageState] = useState(false);
   const navigate = useNavigate();
+  const [isVisible, setIsVisible] = useState(false);
+  useEffect(() => {
+    if (feedbackMessage !== "") {
+      setIsVisible(true);
+    }
+    const timer = setTimeout(() => {
+      console.log("timed out");
+      setIsVisible(false);
+    }, 3000); // Hide the message after 5 seconds
+    return () => clearTimeout(timer);
+  }, [messageState]);
 
   const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -29,11 +42,9 @@ function Login() {
           `Here is the token achieved from the server: ${data.token}`
         );
         setMessage("Successful Login");
-        setMessageColor("green");
         navigate("dashboard");
       } else {
         setMessage(data.message);
-        setMessageColor("red");
       }
     } catch (error) {
       alert(
@@ -48,73 +59,55 @@ function Login() {
   };
 
   return (
-    <>
-      <div
-        style={{
-          width: "100%",
-          height: "100vh",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          position: "relative",
-        }}
-      >
-        <div
-          style={{
-            backgroundColor: "rgba(255, 255, 255, 0.8)",
-            padding: "20px",
-            borderRadius: "10px",
-            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-          }}
-        >
-          <h2 style={{ fontFamily: "Arial", marginBottom: "20px" }}>Sign in</h2>
-          <form
-            onSubmit={handleLogin}
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
+    <div className="login-container">
+      <div className="login-card">
+        <h2 className="login-title">Sign in</h2>
+        <form onSubmit={handleLogin} className="login-form">
+          <CustomizedTextField
+            id="username"
+            label="Username"
+            variant="outlined"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            className="MuiTextField-root"
+          />
+          <CustomizedTextField
+            id="password"
+            label="Password"
+            type="password"
+            variant="outlined"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="MuiTextField-root"
+            sx={{
+              fontFamily: "cursive",
+            }}
+          />
+          <Button
+            variant="contained"
+            type="submit"
+            className="MuiButton-contained"
+            onClick={() => setMessageState(!messageState)}
+            sx={{
+              fontFamily: "cursive",
+              backgroundColor: "#6DAE81",
+              "&:hover": { backgroundColor: "#40826D" },
             }}
           >
-            <TextField
-              id="username"
-              label="Username"
-              variant="outlined"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              style={{ marginBottom: "15px" }}
-            />
-            <TextField
-              id="password"
-              label="Password"
-              type="password"
-              variant="outlined"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              style={{ marginBottom: "15px" }}
-            />
-            <Button
-              variant="contained"
-              type="submit"
-              style={{
-                marginBottom: "15px",
-                backgroundColor: "#4caf50",
-                color: "white",
-              }}
-            >
-              Login
-            </Button>
-          </form>
-          <p
-            style={{ marginTop: "10px", cursor: "pointer" }}
-            onClick={handleRegister}
-          >
-            Don't have an account? Sign up
-          </p>
+            Login
+          </Button>
+        </form>
+        <p className="login-register">
+          Don't have an account?{" "}
+          <span className="sign-up" onClick={handleRegister}>
+            Sign up
+          </span>
+        </p>
+        <div id="feedback-toast" className={isVisible ? "show" : "none"}>
+          {feedbackMessage}
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

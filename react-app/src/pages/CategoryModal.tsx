@@ -69,8 +69,8 @@ function CategoryModal({
           onClick={handleOpen}
           sx={{
             fontFamily: "cursive",
-            backgroundColor: "rgb(105, 230, 105)",
-            "&:hover": { backgroundColor: "black" },
+            backgroundColor: "#8A9A5B",
+            "&:hover": { backgroundColor: "#6B7F4D" },
           }}
         >
           Add Category
@@ -92,9 +92,12 @@ function CategoryModal({
                 onClick={handleClose}
                 sx={{
                   fontFamily: "cursive",
-                  color: "green",
-                  borderColor: "green",
-                  "&:hover": { backgroundColor: "black" },
+                  color: "#FFFACD",
+                  borderColor: "#FFFACD",
+                  "&:hover": {
+                    boxShadow: "0 0 5px rgba(0, 0, 0, 0.5)",
+                    borderColor: "#fffacd",
+                  },
                 }}
               >
                 Cancel
@@ -104,10 +107,9 @@ function CategoryModal({
                 type="submit"
                 sx={{
                   fontFamily: "cursive",
-                  color: "white",
-                  borderColor: "green",
-                  backgroundColor: "rgb(105, 230, 105)",
-                  "&:hover": { backgroundColor: "black" },
+                  color: "#36454F",
+                  backgroundColor: "#32CD32",
+                  "&:hover": { backgroundColor: "#36454F" },
                 }}
               >
                 Confirm

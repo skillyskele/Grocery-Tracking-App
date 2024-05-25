@@ -1,0 +1,83 @@
+/* Main container for the registration page */
+.register-container {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  position: relative;
+  background-color: #f5f5dc; /* Light beige */
+}
+
+
+/* Inner container for the registration form */
+.register-form-container {
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Header for the registration form */
+.register-header {
+  font-family: cursive;
+  margin-bottom: 20px;
+  color: #36454F; /* Charcoal grey */
+}
+
+
+/* Form styling */
+.register-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+  width: 100%; /* Ensure the form takes up full width */
+}
+
+/* TextField styling */
+.register-textfield {
+  width: calc(100% - 32px); /* Adjusted width to accommodate padding */
+}
+
+/* Button styling */
+.register-button {
+  margin-bottom: 15px;
+  background-color: #3CB371; /* Medium sea green */
+  color: white;
+  width: calc(100% - 32px); /* Adjusted width to accommodate padding */
+}
+
+.register-button:hover {
+  background-color: #2E8B57; /* Darker medium sea green */
+}
+
+  /* Show the feedback toast */
+  #feedback-toast.show {
+    visibility: visible;
+    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+/* Fade-in animation */
+@-webkit-keyframes fadein {
+    from { bottom: 0; opacity: 0; } 
+    to { bottom: 30px; opacity: 1; }
+}
+
+@keyframes fadein {
+    from { bottom: 0; opacity: 0; }
+    to { bottom: 30px; opacity: 1; }
+}
+
+/* Fade-out animation */
+@-webkit-keyframes fadeout {
+    from { bottom: 30px; opacity: 1; } 
+    to { bottom: 0; opacity: 0; }
+}
+
+@keyframes fadeout {
+    from { bottom: 30px; opacity: 1; }
+    to { bottom: 0; opacity: 0; }
+}

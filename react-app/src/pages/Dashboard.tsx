@@ -24,7 +24,9 @@ const Dashboard: React.FC = () => {
 
   const [isVisible, setIsVisible] = useState(false);
   useEffect(() => {
-    setIsVisible(true);
+    if (feedbackMessage !== "") {
+      setIsVisible(true);
+    }
     const timer = setTimeout(() => {
       console.log("timed out");
       setIsVisible(false);
@@ -82,7 +84,9 @@ const Dashboard: React.FC = () => {
           <div id="feedback-toast" className={isVisible ? "show" : "none"}>
             {feedbackMessage}
           </div>
-          {processedData.length === 0 && <p>No groceries in stock</p>}
+          {processedData.length === 0 && (
+            <p className="no-groceries">No groceries in stock</p>
+          )}
           {processedData.map((categoryData, index) => (
             <div key={index} className="category-container">
               <CategoryComponent
@@ -95,19 +99,15 @@ const Dashboard: React.FC = () => {
             </div>
           ))}
         </div>
-        <div
-          className="right-half"
-        >
+        <div className="right-half">
           <div className="ingredients-summary">Ingredients Summary</div>
-            <div className="graphs-container">
-              <div className="graph-titles">Category Ingredients Breakdown</div>
-              <IngredientBarGraph {...barGraphProps} />
-              {/* interesting moment when I had to pass in the whole barGraphProps because it kept insisting I was passing in { [ingredient: string]: number } instead of BarGraphProps */}
-              <div className="graph-titles">Macronutrients Summary</div>
-              <MacrosPieChart
-                {...pieChartProps}
-              />
-            </div>
+          <div className="graphs-container">
+            <div className="graph-titles">Category Ingredients Breakdown</div>
+            <IngredientBarGraph {...barGraphProps} />
+            {/* interesting moment when I had to pass in the whole barGraphProps because it kept insisting I was passing in { [ingredient: string]: number } instead of BarGraphProps */}
+            <div className="graph-titles">Macronutrients Summary</div>
+            <MacrosPieChart {...pieChartProps} />
+          </div>
         </div>
       </div>
       <div className="addCategoryModal">

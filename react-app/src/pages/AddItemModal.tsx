@@ -1,9 +1,15 @@
 import React, { FormEvent, useState } from "react";
 import Modal from "@mui/material/Modal";
 import { IconButton } from "@mui/material";
+import Button from "@mui/material/Button";
 import "./styles/AddItemModal.css";
 import { Macros } from "./types";
+import ItemTextField from "./ItemTextField";
 import AddCircle from "@mui/icons-material/AddCircle";
+import dayjs from "dayjs";
+import { DatePicker, LocalizationProvider} from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+
 
 interface Props {
   category: string;
@@ -20,11 +26,11 @@ function AddItemModal({
 }: Props) {
   const [itemName, setItemName] = useState("");
   const [itemAmount, setItemAmount] = useState("");
-  const [itemExpiration, setItemExpiration] = useState("");
+  const [itemExpiration, setItemExpiration] = useState<Date | null>(null);
   const [macros, setMacros] = useState<Macros>({
-    protein: 0,
-    carbs: 0,
-    fat: 0,
+    protein: "",
+    carbs: "",
+    fat: "",
   });
   const [open, setOpen] = useState(false);
   const [unit, setUnit] = useState<string>("");
@@ -78,7 +84,9 @@ function AddItemModal({
       return unit + "es";
     } else if (unit.endsWith("e")) {
       return "pieces";
-    } else if (["g", "kg", "mL", "L", "oz", "fl oz", "tsp", "tbsp"].includes(unit)) {
+    } else if (
+      ["g", "kg", "mL", "L", "oz", "fl oz", "tsp", "tbsp"].includes(unit)
+    ) {
       return unit;
     } else {
       return unit + "s";
@@ -141,22 +149,27 @@ function AddItemModal({
         <div className="add-item-modal-container">
           <div className="add-item-modal-content">
             <form onSubmit={addItem} className="add-item-modal-form">
-              <input
+              <ItemTextField
                 type="text"
-                placeholder="Enter item name"
+                label="Enter item name"
                 value={itemName}
                 onChange={(e) => setItemName(e.target.value)}
                 required
               />
               <div className="horizontal-inputs">
-                <input
+                <ItemTextField
+                  className="input-field"
                   type="text"
-                  placeholder="Enter item amount"
+                  label="Enter item amount"
                   value={itemAmount}
+                  sx={{
+                    maxWidth: "143px",
+                  }}
                   onChange={(e) => setItemAmount(e.target.value)}
                   required
                 />
                 <select
+                  className="input-field"
                   value={unit}
                   onChange={(e) => setUnit(e.target.value)}
                   required
@@ -169,46 +182,55 @@ function AddItemModal({
                   ))}
                 </select>
               </div>
-              <input
-                type="date"
-                placeholder="Enter expiration date"
-                value={itemExpiration}
-                onChange={(e) => setItemExpiration(e.target.value)}
-                required
-              />
-              <input
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DatePicker
+                  label="Enter expiration date"
+                  value={itemExpiration}
+                  onChange={(newValue: Date | null) => setItemExpiration(newValue)}
+                />
+              </LocalizationProvider>
+
+              <ItemTextField
                 type="number"
-                placeholder="Enter Protein"
+                label="Enter Protein"
                 value={macros.protein}
                 onChange={(e) =>
                   setMacros({ ...macros, protein: parseFloat(e.target.value) })
                 }
                 required
               />
-              <input
+              <ItemTextField
                 type="number"
-                placeholder="Enter Carbs"
+                label="Enter Carbs"
                 value={macros.carbs}
                 onChange={(e) =>
                   setMacros({ ...macros, carbs: parseFloat(e.target.value) })
                 }
                 required
               />
-              <input
+              <ItemTextField
                 type="number"
-                placeholder="Enter Fat"
+                label="Enter Fat"
                 value={macros.fat}
                 onChange={(e) =>
                   setMacros({ ...macros, fat: parseFloat(e.target.value) })
                 }
                 required
               />
-              <button
+
+              <Button
                 type="submit"
                 className="add-item-modal-button modal-button-primary"
+                sx={{
+                  fontFamily: "cursive",
+                  color: "white",
+                  borderColor: "green",
+                  backgroundColor: "#50c878",
+                  "&:hover": { backgroundColor: "#2E8B57" },
+                }}
               >
                 Add Item
-              </button>
+              </Button>
             </form>
           </div>
         </div>

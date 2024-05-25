@@ -6,9 +6,9 @@ export interface Item {
   }
 
 export interface Macros {
-  protein: number
-  carbs: number
-  fat: number
+  protein:string| number
+  carbs:string|number
+  fat:string| number
 }
   
   export interface CategoryData {

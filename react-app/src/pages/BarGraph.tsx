@@ -16,12 +16,16 @@ const categories = {
 } as const;
 
 const customPalette = [
-  "#FFB6C1", // LightPink
-  "#87CEFA", // LightSkyBlue
-  "#98FB98", // PaleGreen
-  "#FFD700", // Gold
-  "#FFA07A", // LightSalmon
+  '#36454F',  // charcoal grey (Font and accents)
+  '#98FB98',  // paleGreen (Background or highlight)
+  '#3CB371',  // mediumSeaGreen (Background for titles or highlighted areas)
+  '#FFFACD',  // lemonChiffon (Highlights and accents)
+  '#DAA520',  // goldenrod (Key accents or calls to action)
+  '#556B2F'   // darkOliveGreen (Depth and contrast for darker elements)
 ];
+
+
+
 
 type PaletteKey = keyof typeof categories;
 
@@ -42,9 +46,6 @@ function IngredientBarGraph({ ingredientData }: BarGraphProps) {
   const seriesData = x.map((key) => ({
     dataKey: key,
     stack: "A",
-    valueFormatter: (v: number) => {
-      return `${key} ${v}`;
-    },
   }));
 
   return (
@@ -60,8 +61,8 @@ function IngredientBarGraph({ ingredientData }: BarGraphProps) {
               "& .MuiChartsAxis-tickLabel tspan": { fontFamily: "cursive" },
               "& .MuiChartsLegend-series text": {
                 fontFamily: "cursive",
-                // color: "rgb(105, 230, 105)",
                 fontSize: "12px",
+                fill: '#36454F'
               },
             }}
           />

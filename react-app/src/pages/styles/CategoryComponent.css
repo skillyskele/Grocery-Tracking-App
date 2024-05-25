@@ -13,6 +13,7 @@
   scrollbar-width: none;
   -ms-overflow-style: none;
   border: right 1px solid #000000;
+  background-color: #FDF5E6;
 }
 
 .item-component {
@@ -29,6 +30,8 @@
 
 h2 {
   font-weight: bolder;
+  color:#36454F;
+  padding: 0px 20px
 }
 
 .action-buttons {
